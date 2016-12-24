@@ -16,7 +16,7 @@ class UserManager(object):
             self.data = self.cur.fetchone()
             print self.data	
             if self.data:
-                return True
+                return self.data
         except Exception as e:
             print "Error %s:" % e.args[0]
            

@@ -7,30 +7,30 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="{{url_for('static', filename='app.js')}}"></script>
 </head>
 <body>
 
 <div class="container">
-  {% if user%}
-      <p>hello {{user}}</p>
-  {% else %}
-      {% if tried_login %}
+   {% if tried_login %}
       <p><b>Bad credentials</b></p>
-      {% endif %}
+   {% endif %}
   <h3>Login</h3>
   <form action="/login" method="POST">
     <div class="form-group">
       <label for="nm">Username:</label>
-      <input class="form-control" type="text" id="nm" name = "nm" required>
+      <input placeholder="Enter username" class="form-control" type="text" id="nm" name = "nm" required>
     </div>
     <div class="form-group">
       <label for="pwd">Password:</label>
       <input type="password" class="form-control" id="pwd" name="passw" placeholder="Enter password" required>
     </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+    <button type="submit" class="btn btn-default">Login</button>
   </form>
-  {% endif %}
 </div>
+<hr />
+
+<a href="http://github.com" class="icon-large icon-search">github</a>
 
 </body>
 </html>
