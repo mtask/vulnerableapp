@@ -28,12 +28,14 @@
    <div class = "collapse navbar-collapse" id = "example-navbar-collapse">
 	
       <ul class = "nav navbar-nav">
-         <li><a href="/home/{{session.uuid}}"><span class="glyphicon glyphicon-log-out"></span>My account</a></li>
+         <li><a href="/home"><span class=""></span>Home</a></li>
+         <li><a href="/home/id/{{session.uuid}}"><span class=""></span>My account</a></li>
          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
       </ul>
    </div>
+</nav>
    
-   <form action="#" method="GET">
+   <form id="home_form" action="#" method="GET">
     <div class="form-group">
       <label for="amount">I:</label>
       <input placeholder="..." class="form-control" type="text" id="amount" name = "amount" required>
@@ -42,10 +44,24 @@
   </form>
   
   {% if user_info %}
-  {% for i in user_info %}
-  {{i}}
-  {% endfor %}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>Email</th>
+        <th>CC number</th>
+        <th>CC type</th>
+      </tr>
+    </thead>
+    <tbody>
+  <tr>
+       <td> {{user_info[1]}}</td>
+       <td> {{user_info[2]}}</td>
+       <td> {{user_info[3]}}</td>
+  </tr>
+   </tbody>
+</table>
+
+
   {% endif %}
-</nav>
 </body>
 </html>

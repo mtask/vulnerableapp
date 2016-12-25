@@ -17,7 +17,7 @@ def logout():
    return redirect(url_for('index'))
 
 
-@app.route('/home/<id>')
+@app.route('/home/id/<id>')
 def home_info(id):
     um = UserManager()
     user_info = um.check(id_=id, info=True)
