@@ -4,7 +4,7 @@ import hashlib
 class UserManager(object):
 
 
-    def check(self, user=None, passw=None, notes=False, comments=False, id_=None, comment="", note=""):
+    def check(self, user=None, passw=None, notes=False, comments=False, id_=None, comment="", note="", search=""):
         self.notes = notes
         self.id = id_
         self.note = note
@@ -12,6 +12,7 @@ class UserManager(object):
         self.comments = comments
         self.user = user
         self.passw = passw
+        self.search = search
         self.con = None
         self.data = None
         try:
@@ -33,6 +34,10 @@ class UserManager(object):
             elif self.note and self.id:
                 self.cur.execute("INSERT INTO storage(userid, private, data) VALUES (?,?,?)" ,(self.id, 'yes', self.note))
                 self.con.commit()
+            # Do search from comments
+            elif self.search:
+                # select * from storage where data like '%self.search%' <-- SOmething like that
+                pass
             # Check login attempt
             else:
                 self.cur.execute("SELECT * FROM user WHERE username= '" + self.user + "' AND password='" + self.passw + "'")

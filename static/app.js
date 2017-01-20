@@ -5,17 +5,3 @@ window.onload = function() {
          document.getElementById('comment_feed').style.display = "none";
      }
 }
-
-window.onload = document.getElementById('srchterm').onkeypress = function(e){
-    if (!e) e = window.event;
-    var keyCode = e.keyCode || e.which;
-    if (keyCode == '13'){
-      sendsrch();
-      return false;
-    }
-  }
-
-function sendsrch(){
-    var term = document.getElementById("srchterm").value;
-    location.href = "/search?term="+unescape(term);
-}

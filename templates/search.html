@@ -1,2 +1,7 @@
-
+{% if "Nothing found with" in res %}
 {{res | safe}}
+{% else %}
+{% for r in res %}
+<!-- display founded comments -->
+{% endfor %}
+{% endif %}

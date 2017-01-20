@@ -17,8 +17,13 @@ def index():
 def search():
     # Do some content search here
     search = request.args['term']
+    res = None
+    um = UserManager()
+    res = um.check(search=search)
+    if not res:
+        res = "Nothing found with: "+search
     print search
-    return render_template('search.html', res=search)
+    return render_template('search.html', res=res)
 
 @app.route('/logout')
 def logout():
