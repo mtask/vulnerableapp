@@ -6,6 +6,7 @@ window.onload = function() {
      }
 }
 
-function sendfunc(){
-  alert(1);
+function sendsrch(){
+    //document.getElemntById("srchterm").value;
+    alert(term);
 }

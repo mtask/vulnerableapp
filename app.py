@@ -1,15 +1,28 @@
-from flask import Flask, render_template, redirect, url_for, request, session
+from flask import Flask, render_template, redirect, url_for, request, session, render_template_string
+
 import os
 from bin.db_manager import *
 
 app = Flask(__name__)
 app.secret_key = 'any random string'
 
+
 @app.route('/')
 def index():
    if session.has_key('username'):
        return redirect(url_for('home'))
    return render_template('index.html', user="")
+
+@app.route('/search')
+def search():
+    # Do some content search here
+    search = request.args.get('srchterm')
+    res = ""
+    print search
+    template='search.search'
+    if not res:
+        res = search
+    return render_template('search.html', res="<script>alert(1)</script>")
 
 @app.route('/logout')
 def logout():
