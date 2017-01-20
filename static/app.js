@@ -6,7 +6,16 @@ window.onload = function() {
      }
 }
 
+window.onload = document.getElementById('srchterm').onkeypress = function(e){
+    if (!e) e = window.event;
+    var keyCode = e.keyCode || e.which;
+    if (keyCode == '13'){
+      sendsrch();
+      return false;
+    }
+  }
+
 function sendsrch(){
-    //document.getElemntById("srchterm").value;
-    alert("moi"	);
+    var term = document.getElementById("srchterm").value;
+    location.href = "/search?term="+unescape(term);
 }

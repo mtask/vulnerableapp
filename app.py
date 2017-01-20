@@ -13,16 +13,12 @@ def index():
        return redirect(url_for('home'))
    return render_template('index.html', user="")
 
-@app.route('/search')
+@app.route('/search', methods = ['POST', 'GET'])
 def search():
     # Do some content search here
-    search = request.args.get('srchterm')
-    res = ""
+    search = request.args['term']
     print search
-    template='search.search'
-    if not res:
-        res = search
-    return render_template('search.html', res="<script>alert(1)</script>")
+    return render_template('search.html', res=search)
 
 @app.route('/logout')
 def logout():
