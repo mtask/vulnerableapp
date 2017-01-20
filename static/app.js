@@ -8,5 +8,5 @@ window.onload = function() {
 
 function sendsrch(){
     //document.getElemntById("srchterm").value;
-    alert(term);
+    alert("moi"	);
 }
