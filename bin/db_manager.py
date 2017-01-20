@@ -2,32 +2,48 @@ import sqlite3 as lite
 import hashlib
 
 class UserManager(object):
-    
-    
-    def check(self, user=None, passw=None, info=False, id_=None):
-        self.info = info
+
+
+    def check(self, user=None, passw=None, notes=False, comments=False, id_=None, comment="", note=""):
+        self.notes = notes
         self.id = id_
+        self.note = note
+        self.comment = comment
+        self.comments = comments
         self.user = user
         self.passw = passw
         self.con = None
+        self.data = None
         try:
             self.con = lite.connect('app.db')
-    
+
             self.cur = self.con.cursor()
-            if self.info and self.id:
-                self.cur.execute("SELECT * FROM userinfo WHERE userid= '" + self.id + "'")
+            # Get users notes
+            if self.notes and self.id:
+                self.cur.execute("SELECT data FROM storage WHERE userid= '" + self.id + "' AND private = 'yes'")
+                self.data = self.cur.fetchall()
+            elif self.comments:
+                self.cur.execute("SELECT data FROM storage WHERE private = 'no'")
+                self.data = self.cur.fetchall()
+            # Insert new comment to db
+            elif self.comment and self.id:
+                self.cur.execute("INSERT INTO storage(userid, private, data) VALUES (?,?,?)" ,(self.id, 'no', self.comment))
+                self.con.commit()
+            # Insert users note to db
+            elif self.note and self.id:
+                self.cur.execute("INSERT INTO storage(userid, private, data) VALUES (?,?,?)" ,(self.id, 'yes', self.note))
+                self.con.commit()
+            # Check login attempt
             else:
                 self.cur.execute("SELECT * FROM user WHERE username= '" + self.user + "' AND password='" + self.passw + "'")
-    
-            self.data = self.cur.fetchone()
-            print str(self.data)	
+                self.data = self.cur.fetchone()
             if self.data:
                 return self.data
         except Exception as e:
-            print "Error %s:" % e.args[0]
-           
-    
+            raise e
+
+
         finally:
-    
+
             if self.con:
                 self.con.close()

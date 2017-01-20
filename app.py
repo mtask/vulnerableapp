@@ -10,7 +10,7 @@ def index():
    if session.has_key('username'):
        return redirect(url_for('home'))
    return render_template('index.html', user="")
-   
+
 @app.route('/logout')
 def logout():
    session.pop('username', None)
@@ -18,12 +18,13 @@ def logout():
 
 
 @app.route('/home/id/<id>')
-def home_info(id):
+def home_notes(id):
     um = UserManager()
-    user_info = um.check(id_=id, info=True)
-    return render_template('home.html', user_info=user_info)
-
-
+    user_notes = um.check(id_=id, notes=True)
+    if session.has_key('username'):
+        return render_template('home.html', user_notes=user_notes)
+    else:
+        return redirect(url_for('index'))
 
 @app.route('/home')
 def home():
@@ -33,7 +34,7 @@ def home():
        return render_template('home.html')
    else:
        return redirect(url_for('index'))
-   
+
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
    if request.method == 'POST':
@@ -47,9 +48,25 @@ def login():
            return redirect(url_for('home'))
       else:
            return render_template('index.html',user = user, tried_login=True)
-           
+
    else:
       return redirect(url_for('index'))
+
+@app.route('/sendata')
+def sendata():
+    private = False
+    note = request.args['note']
+    try:
+        private = request.args['private']
+    except Exception:
+        private = False
+
+    um = UserManager()
+    if private:
+        um.check(id_=session['uuid'], note=note)
+    else:
+        um.check(id_=session['uuid'], comment=note)
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug = True)

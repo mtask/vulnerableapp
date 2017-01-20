@@ -12,56 +12,48 @@
 <body>
 
 <nav class = "navbar navbar-default" role = "navigation">
-   
+
    <div class = "navbar-header">
-      <button type = "button" class = "navbar-toggle" 
+      <button type = "button" class = "navbar-toggle"
          data-toggle = "collapse" data-target = "#example-navbar-collapse">
          <span class = "sr-only">Toggle navigation</span>
          <span class = "icon-bar"></span>
          <span class = "icon-bar"></span>
          <span class = "icon-bar"></span>
       </button>
-		
+
       <a class = "navbar-brand" href = "/home">Hi {{session.username}}!</a>
    </div>
-   
+
    <div class = "collapse navbar-collapse" id = "example-navbar-collapse">
-	
+
       <ul class = "nav navbar-nav">
          <li><a href="/home"><span class=""></span>Home</a></li>
-         <li><a href="/home/id/{{session.uuid}}"><span class=""></span>My account</a></li>
+         <li><a href="/home/id/{{session.uuid}}"><span class=""></span>My notes</a></li>
          <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
       </ul>
    </div>
 </nav>
-   
-   <form id="home_form" action="#" method="GET">
-    <div class="form-group">
-      <label for="amount">I:</label>
-      <input placeholder="..." class="form-control" type="text" id="amount" name = "amount" required>
+
+   <form id="home_form" action="/sendata" method="GET" name="send">
+    <div style="text-align: center"class="form-group">
+      <label for="note">Send comment or check "Private" to leave note for yourself</label>
+      <textarea placeholder="write new note" class="form-control" rows="5" id="note" name = "note" required></textarea>
     </div>
+      <div class="form-group">
     <button type="submit" class="btn btn-default">Send</button>
+     <label><input type="checkbox" name="private" value="yes">Private</label>
+   </div>
   </form>
-  
-  {% if user_info %}
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Email</th>
-        <th>CC number</th>
-        <th>CC type</th>
-      </tr>
-    </thead>
-    <tbody>
-  <tr>
-       <td> {{user_info[1]}}</td>
-       <td> {{user_info[2]}}</td>
-       <td> {{user_info[3]}}</td>
-  </tr>
-   </tbody>
-</table>
-
-
+  <br>
+  <div id="comment_feed" style='text-align:center;'>
+    <h3>Comment feed</h3>
+    <!-- Loop and refresh comments - set some max value -->
+  </div>
+  {% if user_notes %}
+  {{ user_notes }}
+  <!-- show private comments here -->
+  <!-- Hide public feed -->
   {% endif %}
 </body>
 </html>
