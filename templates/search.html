@@ -1,7 +1,12 @@
 {% if "Nothing found with" in res %}
-{{res | safe}}
+<p>Nothing found with: <p/>{{res | safe}}
 {% else %}
+<div style="text-align:center;">
+<h2>Search result</h2><br>
 {% for r in res %}
+<p >{{r[2] | safe }}</p>
+<hr />
 <!-- display founded comments -->
 {% endfor %}
+</div>
 {% endif %}

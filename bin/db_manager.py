@@ -36,8 +36,8 @@ class UserManager(object):
                 self.con.commit()
             # Do search from comments
             elif self.search:
-                # select * from storage where data like '%self.search%' <-- SOmething like that
-                pass
+                self.cur.execute("SELECT * FROM storage WHERE data LIKE '%"+self.search+"%'")
+                self.data = self.cur.fetchall()
             # Check login attempt
             else:
                 self.cur.execute("SELECT * FROM user WHERE username= '" + self.user + "' AND password='" + self.passw + "'")
