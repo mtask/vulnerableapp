@@ -36,6 +36,7 @@ def home_notes(id):
     um = UserManager()
     user_notes = um.check(id_=id, notes=True)
     if session.has_key('username'):
+        print user_notes
         return render_template('home.html', user_notes=user_notes)
     else:
         return redirect(url_for('index'))
