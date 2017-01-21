@@ -1,7 +1,7 @@
 import sqlite3 as lite
 import hashlib
 
-class UserManager(object):
+class DbManager(object):
 
 
     def check(self, user=None, passw=None, notes=False, comments=False, id_=None, comment="", note="", search=""):

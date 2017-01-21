@@ -5,20 +5,21 @@ from bin.db_manager import *
 
 app = Flask(__name__)
 app.secret_key = 'any random string'
+db = DbManager()
 
 
 @app.route('/')
 def index():
+   comments = db.check(comments=True)
    if session.has_key('username'):
        return redirect(url_for('home'))
-   return render_template('index.html', user="")
+   return render_template('index.html', user="", comments=comments)
 
 @app.route('/search', methods = ['POST', 'GET'])
 def search():
     # Do some content search here
     search = request.args['term']
-    um = UserManager()
-    res = um.check(search=search)
+    res = db.check(search=search)
     print res
     if not res:
         res = "Nothing found with: "+search
@@ -33,8 +34,8 @@ def logout():
 
 @app.route('/home/id/<id>')
 def home_notes(id):
-    um = UserManager()
-    user_notes = um.check(id_=id, notes=True)
+    user_notes = db.check(id_=id, notes=True)
+    comments = db.check(comments=True)
     if session.has_key('username'):
         print user_notes
         return render_template('home.html', user_notes=user_notes)
@@ -46,17 +47,17 @@ def home():
    if request.form:
        print request.form['amount']
    if session.has_key('username'):
-       return render_template('home.html')
+       comments = db.check(comments=True)
+       return render_template('home.html', comments=comments)
    else:
        return redirect(url_for('index'))
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():
    if request.method == 'POST':
-      um = UserManager()
       user = request.form['nm']
       passw = request.form['passw']
-      userdata = um.check(user, passw)
+      userdata = db.check(user, passw)
       if userdata:
            session['username'] = userdata[1]
            session['uuid'] = userdata[0]
@@ -76,11 +77,10 @@ def sendata():
     except Exception:
         private = False
 
-    um = UserManager()
     if private:
-        um.check(id_=session['uuid'], note=note)
+        db.check(id_=session['uuid'], note=note)
     else:
-        um.check(id_=session['uuid'], comment=note)
+        db.check(id_=session['uuid'], comment=note)
     return redirect(url_for('home'))
 
 if __name__ == '__main__':

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <title>Vuknerable app</title>
+      <title>Vulnerable app</title>
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1">
       <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -39,7 +39,7 @@
       </nav>
       <form id="home_form" action="/sendata" method="GET" name="send">
          <div style="text-align: center"class="form-group">
-            <label for="note">Send comment or check "Private" to leave note for yourself</label>
+            <label for="note">Send comment or check "Private" to leave note to yourself</label>
             <textarea placeholder="" class="form-control" rows="5" id="note" name = "note" required></textarea>
          </div>
          <div class="checkbox">
@@ -51,12 +51,21 @@
       <div id="comment_feed" style='text-align:center;'>
          <h3>Comment feed</h3>
          <!-- Loop and refresh comments - set some max value -->
+         {% for c in comments %}
+          <p >{{c[0]}}</p>
+          <hr />
+         {% endfor %}
+      
       </div>
       </div>
       {% if user_notes %}
-      {{ user_notes }}
-      <!-- show private comments here -->
-      <!-- Hide public feed -->
+      <div style="text-align:center;">
+<h2>Notes</h2><br>
+      {% for n in user_notes %}
+          <p >{{n[0]}}</p>
+          <hr />
+      {% endfor %}
+      </div>
       {%else%}
       {% endif %}
    </body>

@@ -5,3 +5,13 @@ window.onload = function() {
          document.getElementById('comment_feed').style.display = "none";
      }
 }
+
+/*window.onload = $(function() {
+    var url = window.location.href
+    function callAjax(){
+        if ( url.indexOf('/home/id/') == -1 ) {
+            $('#comment_feed').load(url);
+        }
+    }
+    setInterval(callAjax, 5000 );
+});*/

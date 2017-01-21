@@ -48,7 +48,15 @@
             <button type="submit" class="btn btn-default">Login</button>
          </form>
       </div>
-      <hr />
+      <br>
+      <div id="comment_feed" style='text-align:center;'>
+         <h3>Comment feed</h3>
+         <!-- Loop and refresh comments - set some max value -->
+         {% for c in comments %}
+          <p >{{c[0]}}</p>
+          <hr />
+         {% endfor %}
+        </div>
    </body>
    <script src="{{url_for('static', filename='app.js')}}"></script>
 </html>
