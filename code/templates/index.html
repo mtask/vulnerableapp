@@ -20,6 +20,9 @@
          </div>
          <div class="collapse navbar-collapse navbar-ex1-collapse">
             <div class="col-sm-3 col-md-3 pull-right">
+               <ul class = "nav navbar-nav">
+                   <li><a href="/register"><span class=""></span>Register</a></li>
+               </ul>
                <form id="searchorm" class="navbar-form" action="/search">
                   <div class="input-group">
                      <input type="text" class="form-control" placeholder="Search" name="term" id="term">
@@ -52,7 +55,7 @@
       <div id="comments" style='text-align:center;'>
          <h3>Latest comments</h3>
          {% for c in comments %}
-          <p >{{c[0] | safe}}</p>
+          <p>{{c[0] | safe}}</p>
           <hr />
          {% endfor %}
         </div>

@@ -13,15 +13,20 @@ def index():
    comments = db.check(comments=True)
    if session.has_key('username'):
        return redirect(url_for('home'))
-   return render_template('index.html', user="", comments=comments[5:])
+   if not comments:
+       comments = []
+   # Show only 5 newest comments to user
+   if len(comments) > 5:
+       comments = comments[5:]
+   return render_template('index.html', user="", comments=comments)
 
 @app.route('/search', methods = ['POST', 'GET'])
 def search():
-    # Do some content search here
+    # Search content with searchterm provided by user
     search = request.args['term']
     res = db.check(search=search)
     if not res:
-        res = "Nothing found with: "+search
+        res = search
     print search
     return render_template('search.html', res=res)
 
@@ -33,12 +38,17 @@ def logout():
 
 @app.route('/home/id/<id>')
 def home_notes(id):
+    # Request for users private notes
     user_notes = db.check(id_=id, notes=True)
     if session.has_key('username'):
-        print user_notes
         return render_template('home.html', user_notes=user_notes)
     else:
         return redirect(url_for('index'))
+
+@app.route('/register')
+def register():
+     template = '''<p>Registaration is not available at the moment</p>'''
+     return render_template_string(template)
 
 @app.route('/home')
 def home():
@@ -46,7 +56,14 @@ def home():
        print request.form['amount']
    if session.has_key('username'):
        comments = db.check(comments=True)
-       return render_template('home.html', comments=comments[5:])
+       if not comments:
+           # db.check returns None type if nothing found.
+           # comments is then declared here to empty list so it will not throw exception in template.
+           comments = []
+       if len(comments) > 5:
+           # Show only 5 newest comments to user
+           comments = comments[5:]
+       return render_template('home.html', comments=comments)
    else:
        return redirect(url_for('index'))
 
