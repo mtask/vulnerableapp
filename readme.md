@@ -29,7 +29,7 @@ https://wiki.python.org/moin/BeginnersGuide/Download
 
 - Open cmd/terminal
 
-- Navigate to folder where you downloaded this app and run:
+- Navigate to code folder where you cloned or extracted this repository and run:
 
 `python app.py`
 
