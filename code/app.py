@@ -24,9 +24,11 @@ def index():
 def search():
     # Search content with searchterm provided by user
     search = request.args['term']
+    if not search:
+        return render_template('search.html', res="")
     res = db.check(search=search)
     if not res:
-        res = search
+        res = "Nothing found with: "+search
     print search
     return render_template('search.html', res=res)
 
@@ -83,10 +85,14 @@ def login():
    else:
       return redirect(url_for('index'))
 
-@app.route('/sendata')
+@app.route('/sendata', methods = ['POST', 'GET'])
 def sendata():
     private = False
-    note = request.args['note']
+    if request.method == 'POST':
+        note = request.form['note']
+    else:
+        note = request.args['note']
+    print note
     try:
         private = request.args['private']
     except Exception:

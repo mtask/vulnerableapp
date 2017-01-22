@@ -36,10 +36,10 @@
             </div>
          </div>
       </nav>
-      <form id="home_form" action="/sendata" method="GET" name="send">
+      <form id="home_form" action="/sendata" method="POST" name="send">
          <div style="text-align: center"class="form-group">
             <label for="note">Send comment or check "Private" to leave note to yourself</label>
-            <textarea placeholder="" class="form-control" rows="5" id="note" name = "note" required></textarea>
+            <textarea placeholder="" class="form-control" rows="5" id="note" name="note" required></textarea>
          </div>
          <div class="checkbox">
             <label><input type="checkbox" name="private" value="yes">Private</label
