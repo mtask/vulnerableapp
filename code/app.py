@@ -13,14 +13,13 @@ def index():
    comments = db.check(comments=True)
    if session.has_key('username'):
        return redirect(url_for('home'))
-   return render_template('index.html', user="", comments=comments)
+   return render_template('index.html', user="", comments=comments[5:])
 
 @app.route('/search', methods = ['POST', 'GET'])
 def search():
     # Do some content search here
     search = request.args['term']
     res = db.check(search=search)
-    print res
     if not res:
         res = "Nothing found with: "+search
     print search
@@ -35,7 +34,6 @@ def logout():
 @app.route('/home/id/<id>')
 def home_notes(id):
     user_notes = db.check(id_=id, notes=True)
-    comments = db.check(comments=True)
     if session.has_key('username'):
         print user_notes
         return render_template('home.html', user_notes=user_notes)
@@ -48,7 +46,7 @@ def home():
        print request.form['amount']
    if session.has_key('username'):
        comments = db.check(comments=True)
-       return render_template('home.html', comments=comments)
+       return render_template('home.html', comments=comments[5:])
    else:
        return redirect(url_for('index'))
 
