@@ -102,7 +102,7 @@ This of course will also make ZAP post every string that it tests as comment.
 
 ## Report
 
-1. SQL-injection
+1.SQL-injection
 
 Applications login form has SQL-injection vulnerability which allows attacker to login without knowing credentials. Also search function has injection vulnerability which allows attacker to view private notes of  all users.
 
@@ -119,7 +119,7 @@ With using string like "'OR '1'='1" the application will list all comments and a
 Passwords are stored as plaintext in database so hashing+salt should of course be used. Plaintext stored passwords are obviously bad in general but also with this issue if hashing would be used it mostly prevents the attack described above. When attacker gives malicious input for password like "'OR '1'='1" then hash+salt will turn it in somehting like "a4fe1eb5a3cfbdf28a32abb24095eefa" and of course then it doesn't have same kind of affect in SQL select statement. Also prepared statements should be used in every SQL-statement of the application so SQL injection flaws could be prevented in general like the one in search function.
 
 
-2. Reflected Cross site scripting:
+2.Cross site scripting:
 
 Application has reflected xss vulnerability in its search function. If search doesn't come up with any results users input is reflected back. This allows attacker to craft malicious url for the search.
 
@@ -132,8 +132,6 @@ Note: Some browsers like latest version of Google Chrome seems to block this att
 - How to fix:
 
 Every input should be considered as unsafe and be escaped. With Jinja templates that flask uses this flaw would be actually fixed by default so just removing "| safe" from displayed variables in templates should fix this issue.
-
-2.1. Stored Cross site scripting
 
 Application also has stored xss vulnerability. When comments are send and displayed to user the data isn't escaped.
 
@@ -158,7 +156,7 @@ Launch the app and when logged in select "My notes" from navbar. Now application
 
 Now app only checks that user accessing '/home/id/<id>' is authenticated. It should also check that user id in session matches to id which notes are being requested.
 
-4. Cross-Site Request Forgery (CSRF)
+4.Cross-Site Request Forgery (CSRF)
 
 App doesn't send csrf token in forms.
 
